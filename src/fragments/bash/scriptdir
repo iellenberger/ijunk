@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "\$0            : $0"
+echo "\$BASH_SOURCE  : $BASH_SOURCE"
+echo "dirname \$0    :" $(dirname $0)
+
+cd $(dirname $0)
+pwd

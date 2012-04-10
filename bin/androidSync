@@ -1,0 +1,96 @@
+#!/usr/bin/perl -w
+
+use Symbol;
+
+my $volume = "ZAPHOD2";
+
+use strict;
+use warnings;
+
+# --- collect stuff to transfer ---
+run("rsync -avP --delete ~/Music/iTunes/iTunes\\ Music/Podcasts ~/Music/Android");
+
+# --- wait for zaphod ---
+print "\nChecking for Zaphod ";
+$| = 1;
+for (my $count = 0; $count < 600; $count++) {
+	last if -d "/Volumes/$volume";
+	print '.' unless $count % 5;
+	sleep 1;
+}
+print "\nZaphod Found\n\n";
+sleep 5;
+
+# --- cleanup ---
+foreach my $file (qx[find /Volumes/$volume -name ".DS_Store"]) {
+	chomp $file;
+	print "removing $file\n";
+	unlink $file;
+}
+cleandirs("/Volumes/$volume/Podcasts");
+
+# --- transfer stuff to phone ---
+run("rsync -avP ~/Music/Android/Podcasts /Volumes/$volume/");
+
+# --- eject the device(s) ---
+unmount("ZAPHOD", $volume);
+
+run("say Poopee headed farttt farttt!");
+
+sleep 3;
+exit;
+
+# === Utility Functions =====================================================
+sub unmount {
+	foreach my $name (@_) {
+		next unless -e "/Volumes/$name";
+		my $dev  = qx[disktool -l 2>&1 | grep -i $name | cut -d"'" -f2];
+		chomp $dev;
+		my $part = ($dev =~ /^(.{5})/)[0];
+		run("disktool -p $dev; disktool -e $part");
+	}
+}
+
+# --- safely execute command ---
+sub prun { print join(' ', @_) ."\n"; run(@_) }
+sub run {
+	my @cmd = @_;
+
+	# --- run the command ---
+	system(@cmd) == 0 && return 0;
+
+	# --- error executing command ---
+	print STDERR "\nerror executing '". join(' ', @cmd) ."'\n";
+	if ($? == -1) {
+		print STDERR "   failed to execute: $!\n";
+	} elsif ($? & 127) {
+		printf STDERR "   child died with signal %d, %s coredump\n",
+			($? & 127),  ($? & 128) ? 'with' : 'without';
+	} else {
+		printf STDERR "   child exited with value %d\n", $? >> 8;
+	}
+	print "\n";
+
+	sleep 60;
+	exit 1;
+}
+
+# --- remove empty dirs ---
+sub cleandirs {
+	my $base = shift;
+	my $count = 0;
+
+	my $dh = gensym;
+	opendir $dh, $base or return;
+	foreach my $file (readdir $dh) {
+		next if $file =~ /^\.*$/;
+		my $full = "$base/$file";
+		$count++;
+		next unless -d $full;
+		cleandirs($full);
+	}
+	closedir $dh;
+
+	print "removing $base/\n" if $count == 0;
+	rmdir $base;
+}

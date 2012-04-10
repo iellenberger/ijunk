@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FILES="etc/profile etc/profile.d/aliases.sh etc/bash.bashrc home/ingmar/.profile home/ingmar/.bashrc"
+
+for FILE in $FILES; do
+	echo "<h3>/$FILE</h3>"
+	echo "<pre>"
+	sed "s/PS1/<font color=red><b>PS1<\/b><\/font>/" $FILE \
+		| sed -E "s/^([ 	]*)(#.*)$/\1<font color=\"#cccccc\" size=\"1\">\2<\/font>/"
+	echo "</pre>"
+	if [[ "$FILE" == 'etc/bash.bashrc' ]]; then
+		echo "<div style=\"page-break-after: always\"></div>"
+	fi
+done

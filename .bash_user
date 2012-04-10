@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# --- put your customizations here ---
+export PATH=$PATH:/Users/ingmar/bin
+export EDITOR=/usr/local/bin/vile
+
+# --- MacPorts ---
+export PATH=/opt/local/bin:$PATH
+
+# --- Evri stuff ---
+export PATH=$PATH:/ops/bin:/ops/sbin
+export PATH=$PATH:/evri/bin:/evri/sbin
+#export INFACT_HOME=/Users/ingmar/svn/infact/
+
+# --- Java, Ant and Maven ---
+export PATH=$PATH:/usr/share/ant/bin:/usr/share/maven/bin
+export MAVEN_OPTS=-Xmx512m
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/

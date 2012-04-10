@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo DDir
+
+for FILE in ddir.d/*; do
+	if [ -x $FILE ]; then
+		. $FILE
+	fi
+done
+unset FILE
