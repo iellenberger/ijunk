@@ -144,17 +144,17 @@ Sample getopt, version $::VERSION
 
 =head1 NAME
 
-sampleGetopt - examples of usage for Getopt::Long
+getopt.pl - examples of usage for Getopt::Long
 
 =head1 SYNOPSIS
 
- sampleGetopt {-?|--man}
- sampleGetopt [-qvv] [-e]
- sampleGetopt [-fff] [-n NUMBER] [-s string] [ARG [...]]
+ ./getopt.pl {-?|--man}
+ ./getopt.pl [-qvv] [-e]
+ ./getopt.pl [-fff] [-n NUMBER] [-s string] [ARG [...]]
 
 =head1 DESCRIPTION
 
-B<sampleGetopt> is a code sample showing the usage of the L<Getopt::Long> module.
+B<getopt.pl> is a code sample showing the usage of the L<Getopt::Long> module.
 It also shows brief examples of L<Term::ANSIColor> and L<perlpod(1)>/L<perldoc(1)>.
 
 =head1 OPTIONS
@@ -206,7 +206,7 @@ Written by Ingmar Ellenberger.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2001-2006, Ingmar Ellenberger and distributed under The Artistic License.
+Copyright (c) 2001-2012, Ingmar Ellenberger and distributed under The Artistic License.
 For the text the license, see L<http://puma.sourceforge.net/license.psp>
 or read the F<LICENSE> in the root of the Puma distribution.
 
