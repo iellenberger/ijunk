@@ -46,6 +46,9 @@ sub printMerge {
 sub merge {
 	my ($ds1, $ds2) = _refClone(@_);
 
+#	# --- a one-liner for the rest of this sub for those so inclined ---
+#	return defined $ds1 ? (defined $ds2 ? _merge($ds1, $ds2) : $ds1) : (defined $ds2 ? $ds2 : undef);
+
 	# --- if either DS is undef, return the other ---
 	if (!defined $ds1) {
 		return $ds2 if defined $ds2;
@@ -70,8 +73,19 @@ sub _merge {
 	return _mergeHash($ds1, $ds2)  if ref $ds1 eq 'HASH';
 	return _mergeArray($ds1, $ds2) if ref $ds1 eq 'ARRAY';
 
+#	# --- shortened alternative for the above 2 lines w/o using separate subs ---
+#	if (ref $ds1 eq 'HASH') {
+#		map { $ds1->{$_} = _merge($ds1->{$_}, $ds2->{$_}) } keys %$ds2;
+#		return $ds1;
+#	}
+#	if (ref $ds1 eq 'ARRAY') {
+#		map { $ds1->[$_] = _merge($ds1->[$_], $ds2->[$_]) } 0 .. max(scalar @$ds1, scalar @$ds2) - 1;
+#		return $ds1;
+#	}
+
 	# --- if we got here, it's a scalar ---
 	return $ds2;
+
 }
 
 # --- merge two hashes ---
