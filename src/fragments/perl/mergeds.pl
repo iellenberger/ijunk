@@ -45,9 +45,8 @@ sub printMerge {
 # === Main Entry Point ======================================================
 sub merge {
 	my ($ds1, $ds2) = _refClone(@_);
-
-#	# --- a one-liner for the rest of this sub for those so inclined ---
-#	return defined $ds1 ? (defined $ds2 ? _merge($ds1, $ds2) : $ds1) : (defined $ds2 ? $ds2 : undef);
+	# --- a one-liner for the rest of this sub for those so inclined ---
+	# return defined $ds1 ? (defined $ds2 ? _merge($ds1, $ds2) : $ds1) : (defined $ds2 ? $ds2 : undef);
 
 	# --- if either DS is undef, return the other ---
 	if (!defined $ds1) {
@@ -85,7 +84,6 @@ sub _merge {
 
 	# --- if we got here, it's a scalar ---
 	return $ds2;
-
 }
 
 # --- merge two hashes ---
