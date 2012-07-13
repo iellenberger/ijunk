@@ -1,21 +1,21 @@
 #!/usr/bin/perl -w
-$VERSION="0.4.8";
+our $VERSION="0.4.9";
 
-use Data::Dumper; $Data::Dumper::Indent=1; $Data::Dumper::Sortkeys=1; # for debugging only
+use Data::Dumper; $Data::Dumper::Indent=0; $Data::Dumper::Sortkeys=$Data::Dumper::Terse=1; # for debugging only
 use Getopt::Long;
 use Term::ANSIColor qw(:constants);
 
 use strict;
 use warnings;
 
-# === Globals ===============================================================
-my $options = {
-	# set defaults here
-};
-
-# === Main Body of Code =====================================================
+# === CLI Options ===========================================================
 # --- load up all the options ---
-configure($options);
+my $options = configure({
+	# set defaults here
+});
+
+# === Configuration and Globals =============================================
+# === Main Body of Code =====================================================
 
 if ($options->{examples}) {
 	runExamples();
@@ -116,19 +116,20 @@ sub showOptions {
 	print $text unless $options->{quiet};
 }
 
-# === Usage and Error Message ===============================================
+# === Usage =================================================================
 sub usage {
 	my $error = shift;
 	my $progname = ($0 =~ /([^\/]*)$/)[0] || $0;
 
 	print STDERR qq[\nerror: $error\n] if $error;
-	print STDERR qq[
+	print STDERR qq(
 usage: $progname [options] ARGS ...
 
    -?, --help     display this message
       --man          display the manual page for $progname
    -q, --quiet    do things quietly
    -v, --verbose  do things loudly
+   --version      show version
 
    -e, --example  show examples
 
@@ -136,9 +137,10 @@ usage: $progname [options] ARGS ...
    -n, --number NUMBER   sample numeric parameter
    -s, --string STRING   sample string parameter
 
-Sample getopt, version $::VERSION
 
-];
+$progname, version $::VERSION
+
+);
 	exit 1;
 }
 
