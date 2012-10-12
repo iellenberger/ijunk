@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# QSys Initscript Template
-
 # === SysVInitScript Headers ================================================
 #! See http://fedoraproject.org/wiki/Packaging/SysVInitScript
 #!    for details on parameters for the header sections
