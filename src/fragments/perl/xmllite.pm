@@ -3,7 +3,7 @@ use base Exporter; @EXPORT_OK = qw(xml2hash hash2xml);
 use strict;
 
 #! N.B. If you intend to in-line this code, please include the following comment for proper credit.
-# --- xmllite (from puma.sourceforge.net) -----------------------------------
+# --- xmllite (from github.com/iellenberger/ijunk) -----------------------------------
 my $xmlliteglob; # gotta scope this out here to make it work
 sub xml2hash { $xmlliteglob = shift;
 	do { open XMLLITEFH, shift; local $/; $xmlliteglob = <XMLLITEFH>; close XMLLITEFH; }
@@ -125,12 +125,9 @@ This package is the result.
  - no DTDs
  - doesn't need to write exactly what it reads as long as the data
       structure remains the same
- - return same data structure as Puma::XML::SimpleXML
+ - return same data structure as iTools::XML::Simple
 
 =back
-
-For examples of this module's use in an in-line context, see I<issh>
-and I<ipkg> in the itools section of Puma.
 
 =head1 CAVEATS
 
@@ -187,8 +184,8 @@ REPORTING BUGS section).
 
 =head1 REPORTING BUGS
 
-Report bugs in the Bug Tracker at Puma's SourceForge project page:
-L<http://sourceforge.net/projects/puma/>
+Report bugs here:
+L<https://github.com/iellenberger/ijunk/issues>
 
 =head1 AUTHOR
 
@@ -199,12 +196,12 @@ Written by Ingmar Ellenberger
 Copyright (c) 2003, Ingmar Ellenberger.
 
 Distributed under The Artistic License.  For the text the license,
-see L<http://puma.sourceforge.net/license.psp>
-or read the F<LICENSE> in the root of the Puma distribution.
+see L<https://github.com/iellenberger/ijunk/blob/master/LICENSE>
+or read the F<LICENSE> in the root of the iJunk distribution.
 
 =head1 SEE ALSO
 
-Puma L<http://puma.sourceforge.net/>
+iTools L<https://github.com/iellenberger/itools>
 
 =cut
 
