@@ -40,7 +40,6 @@ define-mode rb
 	tabstop 2
 	shiftwidth 2
 ~endwith
-
 define-mode erb
 ~with define-submode erb
 	filtername  'vile-html-filt -a'
@@ -56,6 +55,12 @@ define-mode htmlscript
 	filtername  'vile-html-filt -a'
 	before      "html"
 	suffixes '\.puma$'
+~endwith
+
+; --- rcmode really sucks, clearing it ---
+define-mode rc
+~with define-submode rc
+	suffixes	'\(SomeNonsense$\)'
 ~endwith
 
 ; --- flex '.as' as java ---
