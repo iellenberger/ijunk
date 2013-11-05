@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package>
+	<title>Ingmar's Binaries</title>
+	<description foo="bar"  >
+		Ingmar's binaries
+	</description>
+
+	<this is="a little" test />
+
+	<another test />
+
+	<!-- single line comment -->
+
+	<prefix>bin</prefix>
+	<source>
+		<root>/home/ingmar</root>
+		<files>
+			bin/genkey
+			bin/keys
+			bin/ipkg
+		</files>
+	</source>
+
+
+	<!--
+		multi-line comment
+	-->
+
+	<!-- commented XML
+		<please bite="me" />
+	-->
+
+	<destination foo="bar">
+		<foo bar="foobar"/>
+		<foo bar="foobar"/>
+		<root>~</root>
+		<root>foo</root>
+	</destination>
+</package>
