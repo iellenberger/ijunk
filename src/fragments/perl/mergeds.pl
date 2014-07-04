@@ -36,10 +36,10 @@ sub printMerge {
 		Data::Dumper->Dump([$ds1, $ds2], ['ds1', 'ds2']);
 
 	# --- this line is the secret-sauce ---
-	my $ds3 = merge($ds1, $ds2);
+	my $dsmerged = merge($ds1, $ds2);
 
-	print Data::Dumper->Dump([$ds3], ['ds3']) ."\n";
-	return $ds3;
+	print Data::Dumper->Dump([$dsmerged], ['dsmerged']) ."\n";
+	return $dsmerged;
 }
 
 # === Main Entry Point ======================================================
