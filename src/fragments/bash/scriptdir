@@ -2,7 +2,8 @@
 
 echo "\$0            : $0"
 echo "\$BASH_SOURCE  : $BASH_SOURCE"
+echo "basename \$0   :" $(basename $0)
 echo "dirname \$0    :" $(dirname $0)
 
-cd $(dirname $0)
-pwd
+echo "Full path     :" $(cd $(dirname $0); pwd)/$(basename $0)
+echo '   made via        $(cd $(dirname $0); pwd)/$(basename $0)'
