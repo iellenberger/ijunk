@@ -69,15 +69,15 @@ sub _merge {
 	return $ds2 if ref $ds1 ne ref $ds2;
 
 	# --- call separate subs for hashes and arrays ---
-	return _mergeHash($ds1, $ds2)  if ref $ds1 eq 'HASH';
-	return _mergeArray($ds1, $ds2) if ref $ds1 eq 'ARRAY';
+	return _mergeHash($ds1, $ds2)  if UNIVERSAL::isa($ds1, 'HASH');
+	return _mergeArray($ds1, $ds2) if UNIVERSAL::isa($ds1, 'ARRAY');
 
 #	# --- shortened alternative for the above 2 lines w/o using separate subs ---
-#	if (ref $ds1 eq 'HASH') {
+#	if (UNIVERSAL::isa($ds1,'HASH')) {
 #		map { $ds1->{$_} = _merge($ds1->{$_}, $ds2->{$_}) } keys %$ds2;
 #		return $ds1;
 #	}
-#	if (ref $ds1 eq 'ARRAY') {
+#	if (UNIVERSAL::isa($ds1, 'ARRAY')) {
 #		map { $ds1->[$_] = _merge($ds1->[$_], $ds2->[$_]) } 0 .. max(scalar @$ds1, scalar @$ds2) - 1;
 #		return $ds1;
 #	}
