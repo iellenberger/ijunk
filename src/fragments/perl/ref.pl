@@ -15,11 +15,12 @@ reference a given variable is
 HEADING
 
 my @tests = (
-	[ undef      => undef ],
-	[ "Scalar"   => 'value' ],
-	[ "Arrayref" => [ 'value' ] ],
-	[ "HashRef"  => { key => 'value'} ],
-	[ "Object"   => new myClass({ k => 'v'}) ],
+	[ undef       => undef ],
+	[ "Scalar"    => 'value' ],
+	[ "ScalarRef" => \q[value] ],
+	[ "Arrayref"  => [ 'value' ] ],
+	[ "HashRef"   => { key => 'value'} ],
+	[ "Object"    => new myClass({ k => 'v'}) ],
 );
 
 foreach my $test (@tests) { test($test->[0], $test->[1]) }
