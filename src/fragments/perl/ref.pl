@@ -34,13 +34,22 @@ sub test {
 	printf "%-25s : %s\n", $message, showval(Dumper($var));
 
 	testline("Core", "qq", defined $var ? qq[$var] : undef);
-	testline("", "ref", ref $var);
+	testline("",     "ref", ref $var);
+
 	testline("Scalar::Util","reftype", reftype $var);
-	testline("", "blessed", blessed $var);
-	testline("UNIVERSAL::isa", "SCALAR", UNIVERSAL::isa($var, 'SCALAR'));
-	testline("", "ARRAY", UNIVERSAL::isa($var, 'ARRAY'));
-	testline("", "HASH", UNIVERSAL::isa($var, 'HASH'));
-	testline("", "myClass", UNIVERSAL::isa($var, 'myClass'));
+	testline("",            "blessed", blessed $var);
+
+	my $function = "UNIVERSAL::isa";
+	foreach my $type (qw( SCALAR HASH ARRAY myClass )) {
+		testline($function, $type, UNIVERSAL::isa($var, $type));
+		$function = '';
+	}
+
+	$function = "::_isa";
+	foreach my $type (qw( SCALAR HASH ARRAY myClass )) {
+		testline($function, $type, _isa($var, $type));
+		$function = '';
+	}
 
 	print "\n";
 }
@@ -56,6 +65,13 @@ sub showval {
 	return colored('blank', 'dark')   if $_[0] eq '';
 	return $_[0];
 }
+
+sub _isa {     
+	my ($obj, $type) = @_;
+		   
+	return $obj->isa($type) if blessed $obj;
+	return ref $obj eq $type;
+}    
 
 # === Inline Class for Object Tests =========================================
 package myClass;
