@@ -1,9 +1,22 @@
 #!/bin/bash
 
-echo "\$0            : $0"
-echo "\$BASH_SOURCE  : $BASH_SOURCE"
-echo "basename \$0   :" $(basename $0)
-echo "dirname \$0    :" $(dirname $0)
+echo "The basics:"
+echo "   \$0           : $0"
+echo "   \$BASH_SOURCE : $BASH_SOURCE"
+echo "   basename     : `basename $0`"
+echo "   dirname      : $(dirname $0)"  # demo alternative to backticks
+echo "   pwd          : `pwd`"
+echo
 
-echo "Full path     :" $(cd $(dirname $0); pwd)/$(basename $0)
-echo '   made via        $(cd $(dirname $0); pwd)/$(basename $0)'
+echo "Full path :" $(cd $(dirname $0); pwd)/$(basename $0)
+echo '   generated via $(cd $(dirname $0); pwd)/$(basename $0)'
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Setting envar \$DIR to '$DIR'"
+echo
+
+echo "After setting \$DIR:"
+echo "   basename : `basename $0`"
+echo "   dirname  : `dirname $0`"
+echo "   pwd      : `pwd`"
+echo "   DIR      : $DIR"
