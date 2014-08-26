@@ -9,7 +9,7 @@ use warnings;
 
 # --- text for interpolation ---
 my $text = '
-	This is a ${key1} of the ${hash1:key2} ${hash1:hash2:key3} system
+	This is a ${key1} of the ${hash1.key2} ${hash1.hash2.key3} system
 	This is not how to count: ${array:0} ${array:1} ${array:2} ${array:3} ${array:4}
 ';
 # --- datastruct of values ---
@@ -36,6 +36,7 @@ print "Interpolated Text:\n". interpolate($text, $flat) ."\n";
 sub interpolate {
 	my ($text, $hash) = @_;
 	while (my ($key, $value) = each %$hash) {
+		$key =~ s/\./\\./g;  # escape '.' in keys to make sure we donly match actual dots
 		$text =~ s/\${$key}/$value/;
 	}
 	return $text;
