@@ -1,22 +1,49 @@
 #!/bin/bash
 
+echo
 echo "The basics:"
 echo "   \$0           : $0"
 echo "   \$BASH_SOURCE : $BASH_SOURCE"
-echo "   basename     : `basename $0`"
-echo "   dirname      : $(dirname $0)"  # demo alternative to backticks
+echo "   basename \$0  : `basename $0`"
+echo "   dirname \$0   : $(dirname $0)"  # demo alternative to backticks
 echo "   pwd          : `pwd`"
 echo
 
 echo "Full path :" $(cd $(dirname $0); pwd)/$(basename $0)
 echo '   generated via $(cd $(dirname $0); pwd)/$(basename $0)'
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo "Setting envar \$DIR to '$DIR'"
 echo
 
-echo "After setting \$DIR:"
-echo "   basename : `basename $0`"
-echo "   dirname  : `dirname $0`"
-echo "   pwd      : `pwd`"
-echo "   DIR      : $DIR"
+if [ ! -h $0 ]; then
+
+	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	echo "Setting envar \$DIR to '$DIR'"
+	echo
+
+	echo "After setting \$DIR:"
+	echo "   basename \$0  : `basename $0`"
+	echo "   dirname \$0   : `dirname $0`"
+	echo "   pwd          : `pwd`"
+	echo "   DIR          : $DIR"
+	echo
+
+	SYMLINK=$(dirname $0)/scriptdir.links/symlink
+	echo "============================================================================="
+	echo
+	echo "Re-running script as a symlink:"
+	echo "   $SYMLINK"
+	$SYMLINK
+
+else
+
+	echo "Using readlink \$0:"
+	echo "   readlink \$0             : $(readlink $0)"
+	echo "   readlink \$BASH_SOURCE   : $(readlink $BASH_SOURCE)"
+	echo "   basename \$(readlink \$0) : $(basename $(readlink $0))"
+	echo "   dirname \$(readlink \$0)  : $(dirname $(readlink $0))"
+	echo
+
+	echo "Full path :" $(cd $(dirname $(readlink $0)); pwd)/$(basename $(readlink $0))
+	echo '   generated via $(cd $(dirname $(readlink $0)); pwd)/$(basename $(readlink $0))'
+	echo
+
+fi
