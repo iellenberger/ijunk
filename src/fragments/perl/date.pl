@@ -2,12 +2,17 @@
 $VERSION="0.1.1";
 
 use Data::Dumper; $Data::Dumper::Indent=1; $Data::Dumper::Sortkeys=1; # for debugging only
-#use Date::Format;
+use Date::Format;
 use Date::Parse;
 #use POSIX 'strftime';
 
 use strict;
 use warnings;
+
+# --- strftime/time2str output format ---
+my $format = "%Y-%m-%d %H:%M:%S";
+
+print "In the examples below, time2str() uses the format string '$format'\n\n";
 
 # --- various examples ---
 ptime("scalar localtime()", scalar localtime);
@@ -25,7 +30,7 @@ exit;
 # --- take a date string and convert it to epoch seconds ---
 sub ptime {
 	my ($msg, $time) = @_;
-	chomp $time;  # note neessary for Date::Parse - only for prettification
+	chomp $time;  # not neessary for Date::Parse - only for prettification
 
 	print "$msg\n";
 	print "   in        : $time\n";
@@ -33,6 +38,7 @@ sub ptime {
 	my $etime = str2time($time);
 	print "   str2time  : $etime\n";
 	print "   localtime : ". scalar localtime($etime) ."\n";
+	print "   time2str  : ". time2str($format, $etime) ."\n";
 	print "\n";
 }
 
