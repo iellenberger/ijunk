@@ -1,0 +1,23 @@
+=head1 NAME
+
+another - another POD page
+
+=head1 DESCRIPTION
+
+This is another example of POD documentation in GitHub.
+Note, some of the things in this page may be broken, 'cause this is only a test.
+
+B<bold> I<italics> C<code>
+
+   Indented, should look like code
+   and more code yet
+
+	Indented with a tab
+
+This is a link to the L<README> page.
+
+=head1 SEE ALSO
+
+perlpod(1),
+
+=cut

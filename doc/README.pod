@@ -1,0 +1,30 @@
+=head1 NAME
+
+README - examples of how GitHub handles various types of docs
+
+=head1 DESCRIPTION
+
+This is an example of POD documentation in GitHub.
+
+=head2 Item Example
+
+=over 4
+
+=item item 1
+
+This is an item over by 4.
+The next two items contain no text
+
+=item item 2
+
+=item item 3
+
+This is a link to L<another> page
+
+=back
+
+=head1 SEE ALSO
+
+perldoc(1),
+
+=cut
