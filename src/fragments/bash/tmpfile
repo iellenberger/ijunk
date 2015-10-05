@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# note: both methods can be used to creae a tmpdir as well
+
+# === Manual ================================================================
+
+# --- show current tmpdir ---
+echo "current TMPDIR        : $TMPDIR"
+
+# --- set your own tmpdir ---
+# mktemp uses this for the base as well
+TMPDIR="/tmp"
+
+# --- make tmpfile ---
+TMPFILE=$TMPDIR/$(basename $0).$$.$RANDOM
+echo "roll-your-own tmpfile : $TMPFILE"
+touch $TMPFILE
+if [ $? -ne 0 ]; then
+	echo "$0: Can't create temp file, exiting..."
+	# exit 1  # only pretend
+fi
+
+# --- cleanup ---
+rm $TMPFILE
+
+# === Via mktemp ============================================================
+# see mktemp(1) for details
+TMPFILE=$(mktemp -t $(basename $0).$$)
+if [ $? -ne 0 ]; then
+	echo "$0: Can't create temp file, exiting..."
+	exit 1
+fi
+echo "mktemp tmpfile        : $TMPFILE"
+
+# --- cleanup ---
+rm $TMPFILE
