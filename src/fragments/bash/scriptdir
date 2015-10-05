@@ -6,11 +6,14 @@ echo "   \$0           : $0"
 echo "   \$BASH_SOURCE : $BASH_SOURCE"
 echo "   basename \$0  : `basename $0`"
 echo "   dirname \$0   : $(dirname $0)"  # demo alternative to backticks
-echo "   pwd          : `pwd`"
+echo "   pwd          : $(pwd)"
+echo "   pwd -P       : $(pwd -P)"
 echo
 
 echo "Full path :" $(cd $(dirname $0); pwd)/$(basename $0)
 echo '   generated via $(cd $(dirname $0); pwd)/$(basename $0)'
+echo "Real path :" $(cd $(dirname $0); pwd -P)/$(basename $0)
+echo '   generated via $(cd $(dirname $0); pwd -P)/$(basename $0)'
 echo
 
 if [ ! -h $0 ]; then
@@ -22,7 +25,8 @@ if [ ! -h $0 ]; then
 	echo "After setting \$DIR:"
 	echo "   basename \$0  : `basename $0`"
 	echo "   dirname \$0   : `dirname $0`"
-	echo "   pwd          : `pwd`"
+	echo "   pwd          : $(pwd)"
+	echo "   pwd -P       : $(pwd -P)"
 	echo "   DIR          : $DIR"
 	echo
 
@@ -44,6 +48,8 @@ else
 
 	echo "Full path :" $(cd $(dirname $(readlink $0)); pwd)/$(basename $(readlink $0))
 	echo '   generated via $(cd $(dirname $(readlink $0)); pwd)/$(basename $(readlink $0))'
+	echo "Real path :" $(cd $(dirname $(readlink $0)); pwd -P)/$(basename $(readlink $0))
+	echo '   generated via $(cd $(dirname $(readlink $0)); pwd -P)/$(basename $(readlink $0))'
 	echo
 
 fi
