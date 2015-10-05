@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# This function wraps the 'rm' command to provide a safety mechanism for
+# recursive deletes.
+#
+# I originally wrote this to debug a problem where a deeply nested 'rm -rf'
+# command in one of my other projects (https://github.com/iellenberger/portia)
+# accidentally hosed my home directory.  Sysadmins may want to use this as a
+# default 'rm' replacement for interactive terminal sessions on sensitive
+# (ex. production, beta) systems.
+#
+# To implement, either source this file (command: . rmsafe.shlib) or paste
+# the contents into your script or library (with appropriate attribution, of
+# course).
+#
+# Tested un Bash v3.2.57.  Should work in Bash v.3.x and all subsequent
+# versions.
+#
+# Copyright (c) 2015 by Ingmar Ellenberger.
+# Distrubuted under the Artistic License
+
+# --- prompt for recursive 'rm' command ---
+rm() {
+
+	# --- local variables and presets ---
+	local _PARAM
+	local _YN
+	local _ISRECURSIVE=false
+
+	# --- search for '-r' in the params ---
+	for _PARAM in $*; do
+		if [[ $_PARAM =~ ^-[^[:space:]]*[Rr] ]]; then
+			_ISRECURSIVE=true
+		fi
+	done
+
+	# --- ask for confirmation if recursive requested ---
+	if $($_ISRECURSIVE); then
+
+		# --- adk question ---
+		echo "Attempting to run"
+		echo "   rm $*"
+		echo "   in $(pwd)"
+		echo -n "Do you REALLY want to do this? (y/N) "
+		read -n 1 _YN
+		echo
+
+		# --- process answer ---
+		if [ "$_YN" != "y" ] && [ "$YN" != "Y" ]; then
+			# --- cancel unless 'y' ---
+			echo "Command cancelled"
+			return
+		fi
+	fi
+
+	# --- run command ---
+	echo /bin/rm $*
+}
