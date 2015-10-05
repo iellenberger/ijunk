@@ -25,4 +25,3 @@ exec 'whoami';
 # using infact(1058) for this example
 $> != 1058 and exec "sudo -i -u infact $0 ". join(' ', @ARGV); # via uid
 $ENV{USER} != 'infact' and exec "sudo -i -u infact $0 ". join(' ', @ARGV); # via username
-

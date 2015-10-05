@@ -14,3 +14,7 @@ print "uniq2 + sort : ". join(' ', sort(uniq2(@array))) ."\n";
 sub uniq1 { keys %{{ map { $_, 1 } @_ }} }
 # --- keep order ---
 sub uniq2 { my %h; grep { !$h{$_}++ } @_ }
+
+# The 'keep order' version of uniq() can also filter out undef values.
+# The 'don't givacrap' version can't
+# sub uniq2 { my %h; grep { defined $_ && !$h{$_}++ } @_ }
