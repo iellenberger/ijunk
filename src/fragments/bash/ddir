@@ -1,10 +1,28 @@
 #!/bin/bash
 
-echo DDir
+# Here are two examples of how to execute all scripts in a directory.
+# The first sources all shell scripts, commonly used for /etc/bash.d/* to setup the Bash environment.
+# The second executesa all executable files in a dir, commonly used for /etc/rc#.d/.
 
-for FILE in ddir.d/*; do
-	if [ -x $FILE ]; then
-		. $FILE
-	fi
-done
-unset FILE
+# --- cd to the dir 'ddir' is in ---
+cd $(dirname $0)
+
+# --- source all shell scripts in ddir.d/ ---
+if [ -d ddir.d ]; then
+	for FILE in ddir.d/*.sh; do
+		if [ -r $FILE ]; then
+			. $FILE
+		fi
+	done
+	unset FILE
+fi
+
+# --- run all executable scripts in ddir.d/ ---
+if [ -d ddir.d ]; then
+	for FILE in ddir.d/*; do
+		if [ -x $FILE ]; then
+			$FILE
+		fi
+	done
+	unset FILE
+fi

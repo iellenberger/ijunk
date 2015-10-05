@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "You should never see this message because"
+echo "   this file is not set to be executable"
+echo "   and does not have the extension *.sh"

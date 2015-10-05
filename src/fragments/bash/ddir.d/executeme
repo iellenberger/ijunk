@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "executing ddir.d/executeme"
+echo "   DDIR_ENVAR=$DDIR_ENVAR"
