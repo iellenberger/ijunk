@@ -54,5 +54,5 @@ rm() {
 	fi
 
 	# --- run command ---
-	echo /bin/rm $*
+	/bin/rm $*
 }
