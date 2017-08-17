@@ -2,72 +2,61 @@
 
 # Evaluating a boolean variable
 
-# --- test function ---
-testbool() {
-	echo "MYBOOL $*:"
+# --- function to display a result line ---
+results() {
+	# --- params: returval, index ---
+	RETVAL=$1; INDEX=$2
 
-	# --- test if it's set ---
-	if [ ! -z ${MYBOOL+x} ]; then
-		echo '   ! -z ${MYBOOL+x} : true'
-	else
-		echo '   ! -z ${MYBOOL+x} :       false'
+	# --- format the display value ---
+	if [ -z "${MYBOOL[$INDEX]+x}" ];    then DISPLAYVAL='<unset>'
+	elif [ "${MYBOOL[$INDEX]}" == '' ]; then DISPLAYVAL='<blank>'
+	else                                   DISPLAYVAL=${MYBOOL[$INDEX]}
 	fi
 
-	# --- test if it evaluates without quotes ---
-	if [ $MYBOOL 2> /dev/null ] ; then
-		echo '   $MYBOOL          : true'
-	elif [ "$?" == 2 ]; then
-		echo '   $MYBOOL          :              error'
+	if [ $RETVAL = 0 ]; then
+		printf "   %-10s : true\\n" "$DISPLAYVAL"
+	elif [ $RETVAL == 2 ]; then
+		printf "   %-10s :              error\\n" "$DISPLAYVAL"
 	else
-		echo '   $MYBOOL          :       false'
+		printf "   %-10s :       false\\n" "$DISPLAYVAL"
 	fi
 
-	# --- test if it evaluates with quotes ---
-	if [ "$MYBOOL" ] ; then
-		echo '   "$MYBOOL"        : true'
-	else
-		echo '   "$MYBOOL"        :       false'
-	fi
-
-	# --- test if it evaluates to true without quotes ---
-	if [ $MYBOOL = true 2> /dev/null ] ; then
-		echo '   $MYBOOL = true   : true'
-	elif [ "$?" == 2 ]; then
-		echo '   $MYBOOL = true   :              error'
-	else
-		echo '   $MYBOOL = true   :       false'
-	fi
-
-	# --- test if it evaluates to true with quotes ---
-	# NOTE: this seems the most likely solution you're looking for
-	if [ "$MYBOOL" = true ] ; then
-		echo '   "$MYBOOL" = true : true'
-	else
-		echo '   "$MYBOOL" = true :       false'
-	fi
-
-	echo
 }
 
-# --- test various states of MYBOOL ---
-unset MYBOOL
-testbool "unset" 
+# --- set the array ---
+MYBOOL=( 'true' 'false' 1 0 'two words' '' );
 
-MYBOOL=""
-testbool "blank"
+# --- test if value is set ---
+echo '[ ! -z ${MYBOOL+x} ] - is the value set?'
+for ii in "${!MYBOOL[@]}" 99; do
+	[ ! -z ${MYBOOL[$ii]+x} 2> /dev/null ]
+	results $? $ii
+done
+echo
 
-MYBOOL=0
-testbool $MYBOOL
+echo '[ $MYBOOL ] -> does it have a value? (unquoted)'
+for ii in "${!MYBOOL[@]}" 99; do
+	[ ${MYBOOL[ii]} 2> /dev/null ]
+	results $? $ii
+done
 
-MYBOOL=1
-testbool $MYBOOL
+echo
+echo '[ "$MYBOOL" ] -> does it have a value? (quoted)'
+for ii in "${!MYBOOL[@]}" 99; do
+	[ "${MYBOOL[ii]}" 2> /dev/null ]
+	results $? $ii
+done
 
-MYBOOL="false"
-testbool "'$MYBOOL'"
+echo
+echo '[ $MYBOOL = true ] -> does it evaluate as true? (unquoted)'
+for ii in "${!MYBOOL[@]}" 99; do
+	[ ${MYBOOL[ii]} = true 2> /dev/null ]
+	results $? $ii
+done
 
-MYBOOL="true"
-testbool "'$MYBOOL'"
-
-MYBOOL="two words"
-testbool "'$MYBOOL'"
-
+echo
+echo '[ "$MYBOOL" = true ] -> does it evaluate as true? (quoted)'
+for ii in "${!MYBOOL[@]}" 99; do
+	[ "${MYBOOL[ii]}" = true 2> /dev/null ]
+	results $? $ii
+done
