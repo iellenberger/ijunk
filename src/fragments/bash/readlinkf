@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# readlink on macOS works differently than the GNU version.
+# Here's how to implement 'readlink -f' in an OS agnostic manner
+
+readlinkf() {
+	echo
+	echo "readlinkf($1) $(pwd)"
+
+	if [ -z $1 ]; then
+		echo "readlink requires a param"
+		return
+	fi
+
+	if [[ $OSTYPE =~ ^darwin ]]; then
+		if [[ -h $1 ]]; then
+			echo --- readlink
+			READLINK=$(readlink $1)
+			BASENAME=$(basename $READLINK)
+			BASEPATH=$(cd $(dirname $READLINK); pwd -P)
+			echo $BASEPATH/$BASENAME
+		elif [[ -d $1 ]]; then
+			echo --- dir
+			echo $(cd $1; pwd -P)
+		else
+			echo --- file
+			echo $(cd $(dirname $1); pwd -P)/$(basename $1)
+		fi
+	else
+		# --- this is all you need for GNU's readlink ---
+		readlink -f $1
+	fi
+}
+
+readlinkf
+
+readlinkf readlinkf
+readlinkf x/file
+
+readlinkf x
+readlinkf x/dir
