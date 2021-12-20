@@ -19,8 +19,8 @@ sub sudo {
 	print TMPFILE $block;
 	close TMPFILE;
 
-	my $cmd = "bash $tmpfile";
-	$cmd = "sudo $cmd" if $UID != 0;
+	my @cmd = ("bash", $tmpfile);
+	@cmd = "sudo", @cmd if $UID != 0;
 	system $cmd;
 	unlink $tmpfile;
 }
